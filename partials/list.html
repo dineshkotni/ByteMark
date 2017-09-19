@@ -1,0 +1,21 @@
+<section class="artistpage"> 
+
+  <ul class="artistlist" >
+  <a href="javascript:void(0)" ng-click="deleteAll()">&laquo; Delete All books</a>
+    <li ng-animate="'animate'" class="artist cf" ng-repeat="item in artists">
+             
+        <div class="info col-8 pull-left">
+         <a href="#{{item.url}}">  <h2>{{item.title}}</h2></a>
+          <h3>{{item.author}}</h3>
+          <p>{{item.publisher}}</p>
+        </div>
+        
+        <div class="btns col-4 pull-left">
+          <a href="#/book/edit/{{item.url | onlyNumber}}" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+          <a href="javascript:void(0)" ng-click="delete((item.url | onlyNumber))" > <i class="fa fa-trash-o" aria-hidden="true"   ></i></a>
+        </div>
+      
+    </li>
+  </ul>
+   
+</section>
