@@ -1,6 +1,6 @@
 <section class="artistpage"> 
   <ul class="bookslist" >
-  <a href="javascript:void(0)"  class="btn-round" ng-click="deleteAll()"> Delete All books</a>
+  <a href="javascript:void(0)"  class="btn-round" ng-if="books.length != 0" ng-click="deleteAll()"> Delete All books</a>
   <a class="btn-round" href="#/books/add" >Add New Book</a>
   <div class="space-bot text-center">
             <h1>Books List</h1>
