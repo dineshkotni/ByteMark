@@ -1,6 +1,6 @@
 var myApp = angular.module('myApp', [
   'ngRoute',
-  'artistControllers'
+  'bookControllers'
 ])
 .filter( 'onlyNumber', function() {
 return function( input ) {

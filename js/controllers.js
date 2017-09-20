@@ -1,17 +1,16 @@
-var artistControllers = angular.module('artistControllers', ['ngAnimate','ngRoute']);
-
-artistControllers.controller('ListController', ['$scope', '$http','$location',function($scope, $http,$location) {
+var bookControllers = angular.module('bookControllers', ['ngAnimate','ngRoute']);
+    bookControllers.constant('apiUrl', 'https://interview-api-staging.bytemark.co/books');
+bookControllers.controller('ListController', ['$scope', '$http','$location','apiUrl',function($scope, $http,$location,apiUrl) {
   load();
   function load(){
-    var url = 'https://interview-api-staging.bytemark.co/books';
-    $http.get(url).success(function(data) {      
+    $http.get(apiUrl).success(function(data) {      
       $scope.books = data;
     });
   }
   $scope.delete = function(id,indexId){
     var r = confirm("Are you sure want to delete the book ?");
     if (r == true) {
-      var url = 'https://interview-api-staging.bytemark.co/books/'+id;
+      var url = apiUrl+'/'+id;
       $http.delete(url).success(function(data) {
         $scope.books.splice(indexId,1);
         alert("Book deleted successfully !!!")
@@ -31,14 +30,14 @@ artistControllers.controller('ListController', ['$scope', '$http','$location',fu
 
 }]);
 
-artistControllers.controller('DetailsController', ['$scope', '$http','$routeParams','$location', function($scope, $http, $routeParams,$location) {
-      $scope.whichItem = $routeParams.itemId;
-       var url = 'https://interview-api-staging.bytemark.co/books/'+$scope.whichItem;
+bookControllers.controller('DetailsController', ['$scope', '$http','$routeParams','$location','apiUrl', function($scope, $http, $routeParams,$location,apiUrl) {
+  $scope.whichItem = $routeParams.itemId;
+       var url = apiUrl+'/'+$scope.whichItem;
   $http.get(url).success(function(data) {
     $scope.book = data;   
   });
 }]);
-artistControllers.controller('EditController', ['$scope', '$http','$routeParams','$location', function($scope, $http, $routeParams,$location) {
+bookControllers.controller('EditController', ['$scope', '$http','$routeParams','$location','apiUrl', function($scope, $http, $routeParams,$location,apiUrl) {
     $scope.whichItem = $routeParams.itemId;  
     $scope.handleSubmit = function(){
       
@@ -48,7 +47,7 @@ artistControllers.controller('EditController', ['$scope', '$http','$routeParams'
                 }
             }
          if($scope.whichItem){
-            var url = 'https://interview-api-staging.bytemark.co/books/'+$scope.whichItem;  
+            var url = apiUrl+'/'+$scope.whichItem;  
            $http.put(url, $scope.book, config)
             .success(function (data, status, headers, config) {
               alert("Book Edited successfully !!!");
@@ -57,8 +56,7 @@ artistControllers.controller('EditController', ['$scope', '$http','$routeParams'
             .error(function (data, status, header, config) {
             }); 
          }else{
-           var url = 'https://interview-api-staging.bytemark.co/books'; 
-           $http.post(url, $scope.book, config)
+           $http.post(apiUrl, $scope.book, config)
             .success(function (data, status, headers, config) {
               alert("Book Added successfully !!!");
                 $location.path("/list" );
@@ -71,12 +69,11 @@ artistControllers.controller('EditController', ['$scope', '$http','$routeParams'
       $scope.book={}
     }
     if($scope.whichItem){
-      var url = 'https://interview-api-staging.bytemark.co/books/'+$scope.whichItem; 
+      var url = apiUrl+'/'+$scope.whichItem; 
       $http.get(url).success(function(data) {
       $scope.book = data;        
       });    
-    }
-  
+    } 
 
 }]);
 
