@@ -1,21 +1,24 @@
 <section class="artistpage"> 
-
-  <ul class="artistlist" >
-  <a href="javascript:void(0)" ng-click="deleteAll()">&laquo; Delete All books</a>
-    <li ng-animate="'animate'" class="artist cf" ng-repeat="item in artists">
+  <ul class="bookslist" >
+  <a href="javascript:void(0)"  class="btn-round" ng-click="deleteAll()"> Delete All books</a>
+  <a class="btn-round" href="#/books/add" >Add New Book</a>
+  <div class="space-bot text-center">
+            <h1>Books List</h1>
+           <div class="divider"></div>
+         </div>
+         <li ng-if="books.length == 0">No books in the list.</li>
+    <li ng-animate="'animate'" class="book cf" ng-repeat="item in books">
              
         <div class="info col-8 pull-left">
-         <a href="#{{item.url}}">  <h2>{{item.title}}</h2></a>
+         <a href="#/book/{{item.url | onlyNumber}}">  <h2>{{item.title}}</h2></a>
           <h3>{{item.author}}</h3>
           <p>{{item.publisher}}</p>
-        </div>
-        
+        </div>        
         <div class="btns col-4 pull-left">
           <a href="#/book/edit/{{item.url | onlyNumber}}" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-          <a href="javascript:void(0)" ng-click="delete((item.url | onlyNumber))" > <i class="fa fa-trash-o" aria-hidden="true"   ></i></a>
+          <a href="javascript:void(0)" ng-click="delete((item.url | onlyNumber),books.indexOf(item))" > <i class="fa fa-trash-o" aria-hidden="true"   ></i></a>
         </div>
       
     </li>
-  </ul>
-   
+  </ul>   
 </section>

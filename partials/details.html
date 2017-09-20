@@ -1,13 +1,10 @@
-<section class="artistinfo">
-  <div class="artist cf" ng-model="artists">
-    <a href="#/details/{{prevItem}}" class="btn btn-left">&lt;</a>
-    <a href="#/details/{{nextItem}}" class="btn btn-right">&gt;</a>
-    <h1>{{artists[whichItem].name}}</h1>
+<section class="bookinfo">
+  <div class="book cf" ng-model="book">
+    <h1>{{book.title}}</h1>
     <div class="info">
-      <h3>{{artists[whichItem].reknown}}</h3>
-    
-      <div class="bio">{{artists[whichItem].bio}}</div>
+          <h3>{{book.author}}</h3>             
+      <div class="bio">{{book.publisher}}</div>
     </div>
   </div>
-  <a href="index.html">&laquo; Back to search</a>
+  <a href="index.html">&laquo; Back to Home</a>
 </section>

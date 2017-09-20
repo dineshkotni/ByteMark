@@ -1,9 +1,8 @@
-<section class="artistinfo cards">
-  <div class="artist cf">
-   
+<section class="bookinfo cards">
+  <div class="book cf">   
      <div class="container">
-   <div id="signup">
-      <div class="signup-screen ">
+   <div>
+      <div class="addbook-screen ">
          <div class="space-bot text-center">
             <h1>Book Edit</h1>
            <div class="divider"></div>
@@ -16,25 +15,23 @@
               </div>
                <p class="alert alert-danger" ng-show="(form-register.title.$error.required && form-register.title.$dirty )">This is required field.</p>
                <div class="input-container">
-                <input type="text" id="email"  name="author" value="" ng-model="book.name" required="required">      
-                <label for="email">Author</label>
+                <input type="text" id="author"  name="author" value="" ng-model="book.author" required="required">      
+                <label for="author">Author</label>
                 <div class="bars"></div>
               </div>
               <p class="alert alert-danger" ng-show="(form-register.author.$error.required && form-register.author.$dirty )">This is required field.</p>
               <div class="input-container">
-                <input type="text" id="email"  name="categories" value="" ng-model="book.categories" required="required">      
-                <label for="email">Categories</label>
+                <input type="text" id="categories"  name="categories" value="" ng-model="book.categories" required="required">      
+                <label for="categories">Categories</label>
                 <div class="bars"></div>             
               </div>
                <p class="alert alert-danger" ng-show="(form-register.categories.$error.required && form-register.categories.$dirty )">This is required field.</p>
                <div class="input-container">
-                <input type="text" id="email"  name="publisher" value="" ng-model="book.publisher" required="required">      
-                <label for="email">Publisher</label>
+                <input type="text" id="publisher"  name="publisher" value="" ng-model="book.publisher" required="required">      
+                <label for="publisher">Publisher</label>
                 <div class="bars"></div>
               </div>
-               <p class="alert alert-danger" ng-show="(form-register.publisher.$error.required && form-register.publisher.$dirty )">This is required field.</p>
-
-           
+               <p class="alert alert-danger" ng-show="(form-register.publisher.$error.required && form-register.publisher.$dirty )">This is required field.</p>           
               <div class="space-top text-center">
                <button ng-disabled="form-register.$invalid" class="waves-effect waves-light btn done">
                <i class="fa fa-check" aria-hidden="true"></i> Submit

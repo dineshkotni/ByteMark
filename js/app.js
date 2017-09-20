@@ -21,6 +21,10 @@ myApp.config(['$routeProvider', function($routeProvider) {
     templateUrl: 'partials/edit.html',
     controller: 'EditController'
   }).
+   when('/books/add', {
+    templateUrl: 'partials/edit.html',
+    controller: 'EditController'
+  }).
   otherwise({
     redirectTo: '/list'
   });

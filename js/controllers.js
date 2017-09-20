@@ -1,23 +1,20 @@
-var artistControllers = angular.module('artistControllers', ['ngAnimate']);
+var artistControllers = angular.module('artistControllers', ['ngAnimate','ngRoute']);
 
-artistControllers.controller('ListController', ['$scope', '$http', function($scope, $http) {
-  
-  
+artistControllers.controller('ListController', ['$scope', '$http','$location',function($scope, $http,$location) {
   load();
   function load(){
     var url = 'https://interview-api-staging.bytemark.co/books';
-    $http.get('js/data.json').success(function(data) {
-      console.log("DATA",data);
-      $scope.artists = data;
-      $scope.artistOrder = 'name';
+    $http.get(url).success(function(data) {      
+      $scope.books = data;
     });
   }
-  $scope.delete = function(id){
+  $scope.delete = function(id,indexId){
     var r = confirm("Are you sure want to delete the book ?");
     if (r == true) {
       var url = 'https://interview-api-staging.bytemark.co/books/'+id;
       $http.delete(url).success(function(data) {
-        load();
+        $scope.books.splice(indexId,1);
+        alert("Book deleted successfully !!!")
       });                
     }
   }
@@ -26,7 +23,7 @@ artistControllers.controller('ListController', ['$scope', '$http', function($sco
     if (r == true) {
       var url = 'https://interview-api-staging.bytemark.co/clean';
       $http.delete(url).success(function(data) {
-        load();
+        $scope.books = [];
       });                
     }
 
@@ -34,52 +31,54 @@ artistControllers.controller('ListController', ['$scope', '$http', function($sco
 
 }]);
 
-artistControllers.controller('DetailsController', ['$scope', '$http','$routeParams', function($scope, $http, $routeParams) {
-       
-  $http.get('js/data.json').success(function(data) {
-    $scope.artists = data;
-    $scope.whichItem = $routeParams.itemId;
-    console.log("item",$scope.whichItem);
-    if ($routeParams.itemId > 0) {
-      $scope.prevItem = Number($routeParams.itemId)-1;
-    } else {
-      $scope.prevItem = $scope.artists.length-1;
-    }
-
-    if ($routeParams.itemId < $scope.artists.length-1) {
-      $scope.nextItem = Number($routeParams.itemId)+1;
-    } else {
-      $scope.nextItem = 0;
-    }
-
+artistControllers.controller('DetailsController', ['$scope', '$http','$routeParams','$location', function($scope, $http, $routeParams,$location) {
+      $scope.whichItem = $routeParams.itemId;
+       var url = 'https://interview-api-staging.bytemark.co/books/'+$scope.whichItem;
+  $http.get(url).success(function(data) {
+    $scope.book = data;   
   });
 }]);
-artistControllers.controller('EditController', ['$scope', '$http','$routeParams', function($scope, $http, $routeParams) {
+artistControllers.controller('EditController', ['$scope', '$http','$routeParams','$location', function($scope, $http, $routeParams,$location) {
+    $scope.whichItem = $routeParams.itemId;  
     $scope.handleSubmit = function(){
-      console.log("data",$scope.book);
+      
        var config = {
                 headers : {
                     'Content-Type': 'application/json;charset=utf-8;'
                 }
             }
-        var url = 'https://interview-api-staging.bytemark.co/books/'+$scope.whichItem;   
-        console.log("url",url);
-     $http.put(url, $scope.book, config)
+         if($scope.whichItem){
+            var url = 'https://interview-api-staging.bytemark.co/books/'+$scope.whichItem;  
+           $http.put(url, $scope.book, config)
             .success(function (data, status, headers, config) {
-              console.log("data",data);
+              alert("Book Edited successfully !!!");
+              $location.path("/list" );
             })
             .error(function (data, status, header, config) {
-            });    
-
-  
-
+            }); 
+         }else{
+           var url = 'https://interview-api-staging.bytemark.co/books'; 
+           $http.post(url, $scope.book, config)
+            .success(function (data, status, headers, config) {
+              alert("Book Added successfully !!!");
+                $location.path("/list" );
+            })
+            .error(function (data, status, header, config) {
+            }); 
+         }        
     } 
     $scope.reset = function(){
       $scope.book={}
     }
-  $http.get('js/data.json').success(function(data) {
-    $scope.book = data[0];
-    $scope.whichItem = $routeParams.itemId;    
-  });
+    if($scope.whichItem){
+      var url = 'https://interview-api-staging.bytemark.co/books/'+$scope.whichItem; 
+      $http.get(url).success(function(data) {
+      $scope.book = data;        
+      });    
+    }
+  
+
 }]);
+
+
 
